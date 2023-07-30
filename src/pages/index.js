@@ -13,14 +13,15 @@ import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ products }) {
+
   return (
     <div className="bg-[#f2f4f8]">
       <div>
         <h2 className="text-2xl sm:text-4xl flex justify-center">
           Features Product
         </h2>
-        <FeaturesProduct />
+        <FeaturesProduct products={products} />
       </div>
       <div>
         <h2 className="text-2xl py-6 sm:text-4xl flex justify-center">
@@ -85,3 +86,10 @@ export default function Home() {
 Home.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
+
+export async function getStaticProps() {
+  const res = await fetch("http://localhost:5000/randomCategories");
+  const products = await res.json();
+
+  return { props: { products }, revalidate: 60 };
+}

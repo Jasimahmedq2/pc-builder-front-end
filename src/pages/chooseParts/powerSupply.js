@@ -1,15 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import RootLayout from "@/Component/Layout/RootLayout";
+import { setPowerSupply } from "@/redux/features/parts/partsSlice";
 import { Card, Col, Rate, Row } from "antd";
 import Link from "next/link";
 import React from "react";
+import { useDispatch } from "react-redux";
 
-
-const RamPage = ({ram}) => {
+const ChoosePowerSupplyPage = ({ powerSupply }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <h2 className="text-xl sm:text-4xl flex justify-center items-center py-6">
-        All Ram
+        All PowerSupply
       </h2>
       <Row
         gutter={[
@@ -27,7 +29,7 @@ const RamPage = ({ram}) => {
           },
         ]}
       >
-        {ram?.map((product) => (
+        {powerSupply?.map((product) => (
           <Col
             key={product._id}
             className="gutter-row"
@@ -71,6 +73,14 @@ const RamPage = ({ram}) => {
                     defaultValue={Number(product?.averageRating)}
                   />
                 </div>
+                <Link href="/pcBuilder">
+                  <button
+                    onClick={() => dispatch(setPowerSupply(product))}
+                    className="bg-blue-500 mt-2 hover:cursor-pointer hover:bg-blue-700 font-bold py-2 px-4 text-white rounded"
+                  >
+                    choose
+                  </button>
+                </Link>
               </Card>
             </Link>
           </Col>
@@ -80,16 +90,16 @@ const RamPage = ({ram}) => {
   );
 };
 
-export default RamPage;
-RamPage.getLayout = function getLayout(page) {
+export default ChoosePowerSupplyPage;
+ChoosePowerSupplyPage.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await fetch(
-    "http://localhost:5000/parts/filter?category=ram"
+    "http://localhost:5000/parts/filter?category=power%20supply"
   );
-  const ram = await res.json();
+  const powerSupply = await res.json();
 
-  return { props: { ram }, revalidate: 60 };
+  return { props: { powerSupply } };
 }

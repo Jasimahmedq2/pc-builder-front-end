@@ -1,45 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import RootLayout from "@/Component/Layout/RootLayout";
 import { Card, Col, Rate, Row } from "antd";
 import React from "react";
 
-const product = {
-  _id: "1",
-  productName: "Graphics Card XYZ",
-  category: "Graphics Cards",
-  status: "In Stock",
-  price: 499.99,
-  description: "A high-performance graphics card for gaming and rendering.",
-  keyFeatures: {
-    brand: "Brand X",
-    model: "Model A",
-    specification: "NVIDIA RTX 3080",
-    port: "PCIe 4.0 x16",
-    type: "Dedicated GPU",
-    resolution: "4K",
-    voltage: "12V",
-  },
-  individualRating: 4.7,
-  averageRating: 4.5,
-  reviews: [
-    {
-      username: "User1",
-      rating: 5,
-      comment: "Handles all my games at max settings flawlessly.",
-    },
-    {
-      username: "User2",
-      rating: 4,
-      comment: "Great GPU, but a bit pricey.",
-    },
-    {
-      username: "User3",
-      rating: 5,
-      comment: "The performance is outstanding!",
-    },
-  ],
-};
-
-const PartsDetailsPage = () => {
+const PartsDetailsPage = ({ product }) => {
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={24} md={12}>
@@ -51,7 +15,10 @@ const PartsDetailsPage = () => {
             padding: 12,
           }}
           alt="example"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9S374TSKvEdKgLST56leragFIux7eWjnBgVyyFDIi&s"
+          src={
+            product?.image ||
+            "https://e7.pngegg.com/pngimages/473/579/png-clipart-computer-cases-housings-microatx-personal-computer-corsair-components-pc-case-electronic-device-power-converters.png"
+          }
         />
       </Col>
       <Col xs={24} sm={24} md={12}>
@@ -98,3 +65,27 @@ export default PartsDetailsPage;
 PartsDetailsPage.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
+
+export async function getStaticPaths() {
+  const res = await fetch("http://localhost:5000/parts");
+  const productsData = await res.json();
+  const paths = productsData?.map((product) => ({
+    params: { partsId: product?._id },
+  }));
+
+  return {
+    paths: paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const res = await fetch(`http://localhost:5000/parts/${params.partsId}`);
+  const product = await res.json();
+
+  return {
+    props: {
+      product,
+    },
+  };
+}

@@ -1,11 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import RootLayout from "@/Component/Layout/RootLayout";
+import { setRam } from "@/redux/features/parts/partsSlice";
 import { Card, Col, Rate, Row } from "antd";
 import Link from "next/link";
 import React from "react";
+import { useDispatch } from "react-redux";
 
+const ChooseRamPage = ({ ram }) => {
+  const dispatch = useDispatch();
 
-const RamPage = ({ram}) => {
   return (
     <>
       <h2 className="text-xl sm:text-4xl flex justify-center items-center py-6">
@@ -71,6 +74,14 @@ const RamPage = ({ram}) => {
                     defaultValue={Number(product?.averageRating)}
                   />
                 </div>
+                <Link href="/pcBuilder">
+                  <button
+                    onClick={() => dispatch(setRam(product))}
+                    className="bg-blue-500 mt-2 hover:cursor-pointer hover:bg-blue-700 font-bold py-2 px-4 text-white rounded"
+                  >
+                    choose
+                  </button>
+                </Link>
               </Card>
             </Link>
           </Col>
@@ -80,16 +91,14 @@ const RamPage = ({ram}) => {
   );
 };
 
-export default RamPage;
-RamPage.getLayout = function getLayout(page) {
+export default ChooseRamPage;
+ChooseRamPage.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
 
-export async function getStaticProps() {
-  const res = await fetch(
-    "http://localhost:5000/parts/filter?category=ram"
-  );
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:5000/parts/filter?category=ram");
   const ram = await res.json();
 
-  return { props: { ram }, revalidate: 60 };
+  return { props: { ram } };
 }

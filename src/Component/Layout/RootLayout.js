@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button, Dropdown } from "antd";
 import { FiMonitor } from "react-icons/fi";
 import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 const { Content, Footer, Header } = Layout;
 
@@ -38,6 +39,8 @@ const items = [
 ];
 
 const RootLayout = ({ children }) => {
+  const { data: session } = useSession();
+
   const [size, setSize] = useState("large");
   const {
     token: { colorBgContainer },
@@ -67,16 +70,20 @@ const RootLayout = ({ children }) => {
               Home
             </items>
           </Link>
-          <Link href="/">
-            <items
-              style={{
-                margin: "0px 25px",
-                color: "white",
-              }}
-            >
-              Contact Us
+          {session?.user ? (
+            <items>
+              <Button onClick={() => signOut()} type="primary" danger>
+                Logout
+              </Button>
             </items>
-          </Link>
+          ) : (
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              href="/login"
+            >
+              <items>Login</items>
+            </Link>
+          )}
           <Dropdown
             style={{
               margin: "0px 25px",
@@ -95,10 +102,11 @@ const RootLayout = ({ children }) => {
               parts
             </Button>
           </Dropdown>
-
-          <Button type="dashed" size={size}>
-            pc builder
-          </Button>
+          <Link href="/pcBuilder">
+            <Button type="dashed" size={size}>
+              pc builder
+            </Button>
+          </Link>
         </Menu>
       </Header>
       <Content
