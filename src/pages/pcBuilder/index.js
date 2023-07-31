@@ -9,6 +9,8 @@ import {
   removeStorage,
 } from "@/redux/features/parts/partsSlice";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PcBuilderPage = () => {
   const { motherboard, monitor, processor, ram, storage, powerSupply } =
@@ -63,11 +65,15 @@ const PcBuilderPage = () => {
       {monitor && powerSupply && processor && ram && storage && motherboard && (
         <div className="flex justify-end pt-12">
           {" "}
-          <button className="bg-blue-500 hover:cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button
+            onClick={() => toast.success("yee, your pc is ready for build")}
+            className="bg-blue-500 hover:cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
             complete
           </button>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };

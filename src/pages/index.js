@@ -10,13 +10,16 @@ import { GiComputerFan } from "react-icons/gi";
 import { BsMotherboard } from "react-icons/bs";
 import { MdOutlineStorage } from "react-icons/md";
 import Link from "next/link";
+import BannerComponent from "@/Component/UI/Banner";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ products }) {
-
   return (
     <div className="bg-[#f2f4f8]">
+      <div>
+        <BannerComponent products={products}/>
+      </div>
       <div>
         <h2 className="text-2xl sm:text-4xl flex justify-center">
           Features Product

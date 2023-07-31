@@ -5,6 +5,7 @@ const { Meta } = Card;
 import { StarOutlined, StarFilled, StarTwoTone } from "@ant-design/icons";
 import { Rate } from "antd";
 import Link from "next/link";
+import Image from "next/image";
 
 const FeaturesProduct = ({ products }) => {
   return (
@@ -41,12 +42,14 @@ const FeaturesProduct = ({ products }) => {
                 maxWidth: 600,
               }}
               cover={
-                <img
+                <Image
                   alt="example"
                   src={
                     product?.image ||
                     "https://e7.pngegg.com/pngimages/473/579/png-clipart-computer-cases-housings-microatx-personal-computer-corsair-components-pc-case-electronic-device-power-converters.png"
                   }
+                  width={200}
+                  height={200}
                 />
               }
             >

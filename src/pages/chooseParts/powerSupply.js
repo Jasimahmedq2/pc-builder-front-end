@@ -2,6 +2,7 @@
 import RootLayout from "@/Component/Layout/RootLayout";
 import { setPowerSupply } from "@/redux/features/parts/partsSlice";
 import { Card, Col, Rate, Row } from "antd";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -46,13 +47,15 @@ const ChoosePowerSupplyPage = ({ powerSupply }) => {
                   maxWidth: 600,
                 }}
                 cover={
-                  <img
-                    alt="example"
-                    src={
-                      product?.image ||
-                      "https://e7.pngegg.com/pngimages/473/579/png-clipart-computer-cases-housings-microatx-personal-computer-corsair-components-pc-case-electronic-device-power-converters.png"
-                    }
-                  />
+                  <Image
+                  alt="example"
+                  src={
+                    product?.image ||
+                    "https://e7.pngegg.com/pngimages/473/579/png-clipart-computer-cases-housings-microatx-personal-computer-corsair-components-pc-case-electronic-device-power-converters.png"
+                  }
+                  width={200}
+                  height={200}
+                />
                 }
               >
                 <div
