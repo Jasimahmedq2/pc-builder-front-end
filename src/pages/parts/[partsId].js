@@ -2,7 +2,6 @@
 import RootLayout from "@/Component/Layout/RootLayout";
 import { Card, Col, Rate, Row } from "antd";
 import Image from "next/image";
-import React from "react";
 
 const PartsDetailsPage = ({ product }) => {
   return (
@@ -67,7 +66,7 @@ PartsDetailsPage.getLayout = function getLayout(page) {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:5000/parts");
+  const res = await fetch("https://pc-builder-alpha.vercel.app/parts");
   const productsData = await res.json();
   const paths = productsData?.map((product) => ({
     params: { partsId: product?._id },
@@ -80,7 +79,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`http://localhost:5000/parts/${params.partsId}`);
+  const res = await fetch(`https://pc-builder-alpha.vercel.app/parts/${params.partsId}`);
   const product = await res.json();
 
   return {

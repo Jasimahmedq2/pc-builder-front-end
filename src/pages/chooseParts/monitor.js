@@ -4,7 +4,6 @@ import { setMonitor } from "@/redux/features/parts/partsSlice";
 import { Card, Col, Rate, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { useDispatch } from "react-redux";
 
 const ChooseMonitorPage = ({ monitors }) => {
@@ -100,7 +99,7 @@ ChooseMonitorPage.getLayout = function getLayout(page) {
 
 export async function getServerSideProps() {
   const res = await fetch(
-    "http://localhost:5000/parts/filter?category=monitor"
+    "https://pc-builder-alpha.vercel.app/parts/filter?category=monitor"
   );
   const monitors = await res.json();
 

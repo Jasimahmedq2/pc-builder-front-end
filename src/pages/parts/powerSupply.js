@@ -3,7 +3,6 @@ import RootLayout from "@/Component/Layout/RootLayout";
 import { Card, Col, Rate, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 const PowerSupplyPage = ({ powerSupply }) => {
   return (
@@ -89,7 +88,7 @@ PowerSupplyPage.getLayout = function getLayout(page) {
 
 export async function getStaticProps() {
   const res = await fetch(
-    "http://localhost:5000/parts/filter?category=power%20supply"
+    "https://pc-builder-alpha.vercel.app/parts/filter?category=power%20supply"
   );
   const powerSupply = await res.json();
 

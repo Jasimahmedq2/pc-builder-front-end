@@ -1,16 +1,12 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { Button, Layout } from "antd";
 import RootLayout from "@/Component/Layout/RootLayout";
-import FeaturesProduct from "@/Component/UI/FeaturesProduct";
-import { BsSdCard } from "react-icons/bs";
-import { FiMonitor } from "react-icons/fi";
-import { GiProcessor } from "react-icons/gi";
-import { GiComputerFan } from "react-icons/gi";
-import { BsMotherboard } from "react-icons/bs";
-import { MdOutlineStorage } from "react-icons/md";
-import Link from "next/link";
 import BannerComponent from "@/Component/UI/Banner";
+import FeaturesProduct from "@/Component/UI/FeaturesProduct";
+import { Inter } from "next/font/google";
+import Link from "next/link";
+import { BsMotherboard, BsSdCard } from "react-icons/bs";
+import { FiMonitor } from "react-icons/fi";
+import { GiComputerFan, GiProcessor } from "react-icons/gi";
+import { MdOutlineStorage } from "react-icons/md";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -91,7 +87,7 @@ Home.getLayout = function getLayout(page) {
 };
 
 export async function getStaticProps() {
-  const res = await fetch("http://localhost:5000/randomCategories");
+  const res = await fetch("https://pc-builder-alpha.vercel.app/randomCategories");
   const products = await res.json();
 
   return { props: { products }, revalidate: 60 };

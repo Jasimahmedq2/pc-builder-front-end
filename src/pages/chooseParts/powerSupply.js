@@ -4,7 +4,6 @@ import { setPowerSupply } from "@/redux/features/parts/partsSlice";
 import { Card, Col, Rate, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { useDispatch } from "react-redux";
 
 const ChoosePowerSupplyPage = ({ powerSupply }) => {
@@ -100,7 +99,7 @@ ChoosePowerSupplyPage.getLayout = function getLayout(page) {
 
 export async function getServerSideProps() {
   const res = await fetch(
-    "http://localhost:5000/parts/filter?category=power%20supply"
+    "https://pc-builder-alpha.vercel.app/parts/filter?category=power%20supply"
   );
   const powerSupply = await res.json();
 
